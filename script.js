@@ -133,6 +133,9 @@ const PALAWAN_FEATURED = {
   tag: "Most Popular",
   blurb: "Towering limestone karsts cradle lagoons of impossibly clear turquoise water, with hidden beaches and secret lagoons reachable only by boat.",
   image: "elnido.jpg",
+  bestTime: "Dec — May",
+  gettingThere: "1hr flight from Manila",
+  goodFor: "Island hopping, kayaking",
   // Three signature spots shown as photo cards beside the intro copy —
   // same "photo + serif name + short line" treatment as the Palawan
   // destinations section below.
@@ -171,6 +174,9 @@ const CORON_FEATURED = {
   location: "Northern Palawan",
   tag: "Wrecks & Lagoons",
   blurb: "Sunken WWII wrecks, mirror-still crater lakes, and jagged limestone islands rising straight out of the sea — reachable only by island-hopping boat.",
+  bestTime: "Nov — May",
+  gettingThere: "1hr flight from Manila",
+  goodFor: "Wreck diving, island hopping",
   spots: [
     {
       name: "Kayangan Lake",
@@ -208,6 +214,9 @@ const PUERTO_FEATURED = {
   tag: "Underground River",
   blurb: "A UNESCO World Heritage cave river winds beneath the jungle, while quiet lagoons and limestone coves ring the coastline just outside the city.",
   image: "puerto.jpg",
+  bestTime: "Nov — May",
+  gettingThere: "1.5hr flight from Manila",
+  goodFor: "Cave tours, city-to-island escapes",
   spots: [
     {
       name: "Subterranean River",
@@ -385,6 +394,20 @@ function renderFeaturedBlock(featured, morePhotos, modifierClass) {
         <span class="card-tag palawan-tag">${featured.tag} · ${featured.location}</span>
         <h3>${featured.name}</h3>
         <p>${featured.blurb}</p>
+        <div class="palawan-info-row">
+          <div class="palawan-info-item">
+            <span class="palawan-info-label"><i data-lucide="sun"></i> Best time</span>
+            <span class="palawan-info-value">${featured.bestTime}</span>
+          </div>
+          <div class="palawan-info-item">
+            <span class="palawan-info-label"><i data-lucide="plane"></i> Getting there</span>
+            <span class="palawan-info-value">${featured.gettingThere}</span>
+          </div>
+          <div class="palawan-info-item">
+            <span class="palawan-info-label"><i data-lucide="waves"></i> Good for</span>
+            <span class="palawan-info-value">${featured.goodFor}</span>
+          </div>
+        </div>
         <button class="card-explore palawan-cta">
           Plan your trip <i data-lucide="arrow-right"></i>
         </button>
@@ -414,6 +437,13 @@ function renderPalawanView() {
       <p>Limestone cliffs, hidden lagoons, and some of the clearest water in the country — Palawan's islands, one quiet cove at a time.</p>
     </div>
 
+    <div class="palawan-pills" id="palawanPills">
+      <button class="pill-btn active" data-target="hero-elnido">El Nido</button>
+      <button class="pill-btn" data-target="hero-coron">Coron</button>
+      <button class="pill-btn" data-target="hero-puerto">Puerto Princesa</button>
+      <button class="pill-btn" data-target="further-afield">Further Afield</button>
+    </div>
+
     ${renderFeaturedBlock(PALAWAN_FEATURED, EL_NIDO_MORE_PHOTOS, "hero-elnido")}
     ${renderFeaturedBlock(CORON_FEATURED, CORON_MORE_PHOTOS, "hero-coron")}
     ${renderFeaturedBlock(PUERTO_FEATURED, PUERTO_MORE_PHOTOS, "hero-puerto")}
@@ -430,11 +460,28 @@ function renderPalawanView() {
 
   if (window.lucide) lucide.createIcons();
   observeReveals(palawanView);
+  observePalawanPills();
   // El Nido is the first section, so start the whole view tinted toward
   // it right away instead of leaving the heading area on plain cream
   // until the card scrolls into the middle of the screen.
   discoverSection.classList.add("bg-elnido");
   observePalawanBackgrounds();
+}
+
+// Pill nav — clicking jumps to that section; "Further Afield" has no
+// dedicated block yet, so it scrolls to the end of the Palawan content.
+function observePalawanPills() {
+  const pills = palawanView.querySelectorAll(".pill-btn");
+  pills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      const target = pill.dataset.target;
+      const el =
+        target === "further-afield"
+          ? palawanView.lastElementChild
+          : palawanView.querySelector(`.${target}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
 }
 
 // As the page scrolls through the El Nido / Coron / Puerto Princesa
@@ -461,6 +508,10 @@ function observePalawanBackgrounds() {
           discoverSection.classList.remove(bgClass)
         );
         discoverSection.classList.add(PALAWAN_BG_CLASSES[modifier]);
+
+        palawanView.querySelectorAll(".pill-btn").forEach((pill) => {
+          pill.classList.toggle("active", pill.dataset.target === modifier);
+        });
       });
     },
     { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
