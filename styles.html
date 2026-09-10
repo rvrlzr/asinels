@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Travalgo — Explore Beautiful Philippines</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+
+  <!-- background layers, one per destination, crossfaded via .active -->
+  <div class="hero-bg-layers" id="bgLayers"></div>
+
+  <!-- gradient + vignette overlays -->
+  <div class="hero-overlay-gradient"></div>
+  <div class="hero-overlay-vignette"></div>
+
+  <!-- faint oversized wordmark -->
+  <div class="ghost-word" id="ghostWord">BORACAY</div>
+
+  <div class="hero-content">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-row">
+        <span class="logo">Travalgo</span>
+
+        <nav class="nav-desktop">
+          <a href="#">Home</a>
+          <a href="#">About Us</a>
+          <a href="#">Book Now</a>
+          <a href="#">Sign in</a>
+          <a href="#" class="nav-cta">Create Account</a>
+        </nav>
+
+        <button class="menu-btn" id="menuOpenBtn" aria-label="Open menu">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero main -->
+    <div class="hero-main">
+      <p class="tagline" id="tagline">Explore Beautiful</p>
+
+      <div class="title-row">
+        <div class="side-nav side-nav--left">
+          <button class="arrow-btn" id="prevBtn" aria-label="Previous destination">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <span class="side-label" id="prevLabel">Kashmir</span>
+        </div>
+
+        <h1 class="destination-title" id="destTitle">
+          BORACAY
+          <span class="reflection" id="destTitleReflection" aria-hidden="true">Philippines</span>
+        </h1>
+
+        <div class="side-nav side-nav--right">
+          <button class="arrow-btn" id="nextBtn" aria-label="Next destination">
+            <i data-lucide="chevron-right"></i>
+          </button>
+          <span class="side-label" id="nextLabel">Kashmir</span>
+        </div>
+      </div>
+
+      <!-- mobile prev/next -->
+      <div class="mobile-nav">
+        <button id="mobilePrevBtn"><i data-lucide="chevron-left"></i><span id="mobilePrevLabel">Kashmir</span></button>
+        <button id="mobileNextBtn"><span id="mobileNextLabel">Kashmir</span><i data-lucide="chevron-right"></i></button>
+      </div>
+
+      <!-- indicators -->
+      <div class="indicators" id="indicators"></div>
+
+      <!-- Search bar -->
+      <div class="search-wrap">
+        <div class="search-bar" id="searchBar">
+
+        <div class="filter" data-filter="destination">
+          <button class="filter-btn" id="destFilterBtn">
+            <i data-lucide="map-pin"></i>
+            <span class="filter-text">
+              <span class="filter-label">Destination</span>
+              <span class="filter-value" id="destFilterValue">Any</span>
+            </span>
+            <i data-lucide="chevron-down" class="chev"></i>
+          </button>
+          <div class="dropdown" id="destDropdown"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="filter" data-filter="activity">
+          <button class="filter-btn" id="activityFilterBtn">
+            <i data-lucide="compass"></i>
+            <span class="filter-text">
+              <span class="filter-label">Activities &amp; Themes</span>
+              <span class="filter-value" id="activityFilterValue">Any</span>
+            </span>
+            <i data-lucide="chevron-down" class="chev"></i>
+          </button>
+          <div class="dropdown" id="activityDropdown"></div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="filter" data-filter="price">
+          <button class="filter-btn" id="priceFilterBtn">
+            <i data-lucide="indian-rupee"></i>
+            <span class="filter-text">
+              <span class="filter-label">Average Price</span>
+              <span class="filter-value" id="priceFilterValue">Any</span>
+            </span>
+            <i data-lucide="chevron-down" class="chev"></i>
+          </button>
+          <div class="dropdown" id="priceDropdown"></div>
+        </div>
+
+        <button class="search-btn" id="searchBtn">
+          <i data-lucide="search"></i>
+          <span>Search</span>
+        </button>
+      </div>
+
+      <!-- results panel -->
+      <div class="results-panel" id="resultsPanel">
+        <div class="results-thumb" id="resultsThumb"></div>
+        <div class="results-text">
+          <p class="results-title" id="resultsTitle">Boracay</p>
+          <p class="results-blurb" id="resultsBlurb">Backwaters, tea hills, and slow mornings.</p>
+        </div>
+        <button class="results-close" id="resultsCloseBtn" aria-label="Close results">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= MOBILE MENU OVERLAY ================= -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top">
+    <span class="logo">Travalgo</span>
+    <button id="menuCloseBtn" aria-label="Close menu"><i data-lucide="x"></i></button>
+  </div>
+  <nav class="mobile-menu-nav">
+    <a href="#">Home</a>
+    <a href="#">About Us</a>
+    <a href="#">Book Now</a>
+    <a href="#">Sign in</a>
+    <a href="#" class="nav-cta">Create Account</a>
+  </nav>
+  <div class="mobile-menu-contact">
+    <a href="mailto:hello@travalgo.com"><i data-lucide="mail"></i> hello@travalgo.com</a>
+    <a href="tel:+919876543210"><i data-lucide="phone"></i> +91 98765 43210</a>
+  </div>
+</div>
+
+<!-- ================= BELOW-HERO CONTENT (view switches here) ================= -->
+<section class="discover">
+  <div class="discover-inner">
+
+    <!-- Main Philippines grid view -->
+    <div id="philippinesView">
+      <div class="discover-heading reveal">
+        <h2>Discover Philippines</h2>
+        <p>Explore breathtaking destinations, unforgettable experiences, and the beauty of the Philippines — one quiet, well-planned journey at a time.</p>
+      </div>
+
+      <div class="card-grid" id="cardGrid"></div>
+    </div>
+
+    <!-- Palawan destinations view (populated by JS, hidden by default) -->
+    <div id="palawanView" class="palawan-view view-hidden"></div>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <span class="logo">Travalgo</span>
+  <p id="footerCopy">© 2026 Travalgo Journeys. Crafted for slow, considered travel.</p>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
